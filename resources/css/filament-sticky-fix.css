@@ -1,0 +1,144 @@
+/* Filament dark mode is toggled via .dark on <html> */
+
+/* Specific Sticky Columns Styles */
+.fi-sticky-col {
+    position: sticky !important;
+}
+
+.fi-sticky-col-index {
+    left: 0;
+    width: 50px;
+    min-width: 50px;
+    max-width: 50px;
+    border-right: 1px solid var(--fi-color-gray-200);
+}
+
+.fi-sticky-col-full-name {
+    left: 50px;
+    width: 250px;
+    min-width: 250px;
+    max-width: 250px;
+    border-right: 1px solid var(--fi-color-gray-200);
+}
+
+.fi-sticky-col-class {
+    left: 300px;
+    width: 120px;
+    min-width: 120px;
+    max-width: 120px;
+    box-shadow: 4px 0 6px -2px rgba(0,0,0,0.15);
+}
+
+/* Light mode sticky cells */
+.fi-ta-cell.fi-sticky-col {
+    background-color: #ffffff !important;
+    border-color: #ffffff !important;
+    z-index: 50;
+}
+
+/* Striped light rows */
+.fi-ta-row:nth-child(even) .fi-ta-cell.fi-sticky-col {
+    background-color: #f9fafb !important;
+    border-color: #f9fafb !important;
+}   
+
+/* Dark mode sticky cells */
+.dark .fi-ta-cell.fi-sticky-col {
+    background-color: var(--gray-900) !important; /* gray-900 */
+    border-color: var(--gray-900) !important;
+}
+
+/* Striped dark rows */
+.dark .fi-ta-row:nth-child(even) .fi-ta-cell.fi-sticky-col {
+    background-color: var(--gray-800) !important; /* gray-950 */
+    border-color: var(--gray-800) !important;
+}
+
+/* Hover state */
+.dark .fi-ta-row:hover .fi-ta-cell.fi-sticky-col {
+    background-color: var(--gray-900) !important; /* gray-800 */
+    border-color: var(--gray-900) !important;
+}
+
+/* ==========================================================================
+   Vertical Sticky Table Headers (fixes overlap for multi-row headers)
+   ========================================================================== */
+
+/* Make the entire table header sticky vertically.
+   Do NOT set z-index here — it would create a stacking context
+   that prevents individual th z-indexes from working across
+   the sticky / non-sticky boundary. */
+.fi-ta-content table thead {
+    position: sticky;
+    top: 0;
+}
+
+/* Disable individual th vertical stickiness since thead handles it */
+.fi-ta-content table thead th {
+    top: auto !important;
+}
+
+/*
+ * Force non-sticky th cells to scroll with the content.
+ * Give them a LOW z-index so they slide UNDER the sticky columns
+ * when the user scrolls horizontally.
+ */
+.fi-ta-content table thead th:not(.fi-sticky-col) {
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* Light mode: opaque header backgrounds */
+.fi-ta-content table thead tr,
+.fi-ta-content table thead tr th {
+    background-color: #f9fafb !important;
+}
+
+/* Dark mode: opaque header backgrounds */
+.dark .fi-ta-content table thead tr,
+.dark .fi-ta-content table thead tr th {
+    background-color: var(--gray-900) !important;
+}
+
+/* Horizontally-sticky header columns: high z-index + opaque bg to sit on top */
+.fi-ta-content table thead th.fi-sticky-col {
+    z-index: 65 !important;
+    background-color: #f9fafb !important;
+    border-color: #f9fafb !important;
+}
+
+.dark .fi-ta-content table thead th.fi-sticky-col {
+    background-color: var(--gray-900) !important;
+    border-color: var(--gray-900) !important;
+}
+
+.dark .fi-ta-content table thead tr.fi-ta-table-head-groups-row th.fi-sticky-col {
+    @apply bg-gray-800 border-gray-800 !important;
+}
+
+/* ==========================================================================
+   Inline filters in toolbar (AboveContent filters moved into header toolbar)
+   ========================================================================== */
+
+/* When filters-above-content-ctn is inside the toolbar, remove its block styling */
+.fi-ta-header-toolbar > .fi-ta-filters-above-content-ctn {
+    border: none !important;
+    padding: 0 !important;
+    background: transparent !important;
+    flex-shrink: 0;
+}
+
+/* Remove the heading/label from inline filters */
+.fi-ta-header-toolbar > .fi-ta-filters-above-content-ctn .fi-ta-filters-heading {
+    display: none !important;
+}
+
+/* Make the filter form items display inline */
+.fi-ta-header-toolbar > .fi-ta-filters-above-content-ctn .fi-fo-component-ctn {
+    gap: 0.5rem !important;
+}
+
+/* Hide the filter labels when inline in toolbar */
+.fi-ta-header-toolbar > .fi-ta-filters-above-content-ctn .fi-fo-field-wrp > label:first-child {
+    display: none !important;
+}
