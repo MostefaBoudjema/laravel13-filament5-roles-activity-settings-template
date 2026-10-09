@@ -23,11 +23,23 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Filament\Resources\Settings\SettingResource;
 use App\Filament\Resources\Users\UserResource;
 use App\Filament\Pages\FinancialReports;
+use Illuminate\Support\Facades\Storage;
 
 class FilamentServiceProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
+
+            if (
+                \Illuminate\Support\Facades\Schema::hasTable('settings') 
+            ) {
+
+                    $logo = \App\Models\Setting::where('key', 'logo')
+                        ->value('value');
+                    $favicon = \App\Models\Setting::where('key', 'favicon')
+                        ->value('value');
+             
+            }
         return $panel
             ->default()
             ->id('admin')
@@ -37,7 +49,9 @@ class FilamentServiceProvider extends PanelProvider
                 'secondary' => Color::Indigo,
             ])
             ->login()
-            ->brandLogo(asset('logo.png'))
+                        ->brandLogo($logo ? url(Storage::disk('public')->url($logo)) : asset('logo.png'))
+            ->favicon($favicon ? url(Storage::disk('public')->url($favicon)) : asset('favicon.ico'))
+           
             ->brandLogoHeight(fn () => request()->routeIs('filament.admin.auth.login') ? '4rem' : '2rem') 
             ->maxContentWidth(Width::Full)
             ->discoverResources(app_path('Filament/Resources'), app()->getNamespace() . 'Filament\\Resources')
@@ -85,26 +99,7 @@ class FilamentServiceProvider extends PanelProvider
                     '<style>' . file_get_contents(resource_path('css/filament-sticky-fix.css')) . '</style>'
                 )
             )
-            // ->renderHook(
-            //     \Filament\View\PanelsRenderHook::SIDEBAR_LOGO_AFTER,
-            //     fn (): string => \Illuminate\Support\Facades\Blade::render('
-            //         @if($currentAcademicYear = \App\Models\AcademicYear::current()->first())
-            //             <span class="ml-4 text-[36pt] font-bold text-primary-600 dark:text-primary-400">
-            //                 {{ $currentAcademicYear->name }}
-            //             </span>
-            //         @endif
-            //     ')
-            // )
-            ->renderHook(
-                \Filament\View\PanelsRenderHook::TOPBAR_LOGO_AFTER,
-                fn (): string => \Illuminate\Support\Facades\Blade::render('
-                    @if($currentAcademicYear = \App\Models\AcademicYear::current()->first())
-                        <span class="ml-4 font-bold text-primary-600 dark:text-primary-400" style="font-size: 16pt;">
-                            {{ $currentAcademicYear->name }}
-                        </span>
-                    @endif
-                ')
-            )
+
             ;
 
 

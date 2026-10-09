@@ -14,48 +14,7 @@ class ListSettings extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\Action::make('copy_from_previous_year')
-                ->label(__('Copy from Previous Year'))
-                ->icon('heroicon-s-document-duplicate')
-                ->action(function () {
-                    $currentYear = \App\Models\AcademicYear::where('is_current', true)->first();
-                    if (!$currentYear) {
-                        \Filament\Notifications\Notification::make()->title(__('Current academic year not found'))->danger()->send();
-                        return;
-                    }
-                    $previousYear = \App\Models\AcademicYear::where('start_date', '<', $currentYear->start_date)->orderBy('start_date', 'desc')->first();
-                    if (!$previousYear) {
-                        \Filament\Notifications\Notification::make()->title(__('Previous academic year not found'))->danger()->send();
-                        return;
-                    }
-
-                    $previousSettings = \App\Models\Setting::where('academic_year_id', $previousYear->id)->get();
-                    if ($previousSettings->isEmpty()) {
-                        \Filament\Notifications\Notification::make()->title(__('No settings found for previous year'))->warning()->send();
-                        return;
-                    }
-
-                    $count = 0;
-                    foreach ($previousSettings as $setting) {
-                        $created = \App\Models\Setting::firstOrCreate([
-                            'key' => $setting->key,
-                            'academic_year_id' => $currentYear->id,
-                        ], [
-                            'value' => $setting->value,
-                            'type' => $setting->type,
-                        ]);
-                        if ($created->wasRecentlyCreated) {
-                            $count++;
-                        }
-                    }
-                    
-                    \Filament\Notifications\Notification::make()
-                        ->title(__(':count Settings copied successfully', ['count' => $count]))
-                        ->success()
-                        ->send();
-                })
-                ->requiresConfirmation()
-                ->color('info'),
+            
             Actions\Action::make('export_db')
                 ->label('Export Database')
                 ->icon('heroicon-s-arrow-down-tray')

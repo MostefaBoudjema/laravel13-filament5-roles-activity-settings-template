@@ -86,18 +86,5 @@ class AppServiceProvider extends ServiceProvider
             return "⚠️ {$key}";
         });
 
-        try {
-            if (\Illuminate\Support\Facades\Schema::hasTable('settings')) {
-                $currentYear = \App\Models\AcademicYear::where('is_current', true)->first();
-                if ($currentYear) {
-                    $settings = \App\Models\Setting::where('academic_year_id', $currentYear->id)->get();
-                    foreach ($settings as $setting) {
-                        config(["school.{$setting->key}" => $setting->value]);
-                    }
-                }
-            }
-        } catch (\Exception $e) {
-            // Ignore during migrations or initial setup
-        }
     }
 }

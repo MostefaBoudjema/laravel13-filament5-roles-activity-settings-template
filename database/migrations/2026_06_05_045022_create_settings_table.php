@@ -13,13 +13,11 @@ return new class extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('academic_year_id')->constrained()->cascadeOnDelete();
             $table->string('key', 100);
             $table->text('value')->nullable();
             $table->boolean('editable')->default(true);
             $table->enum('type', ['text', 'number', 'boolean'])->default('text');
             $table->timestamps();
-            $table->unique(['key', 'academic_year_id']);
         });
     }
 

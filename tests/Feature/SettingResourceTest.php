@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Filament\Resources\Settings\Pages\CreateSetting;
 use App\Filament\Resources\Settings\Pages\EditSetting;
-use App\Models\AcademicYear;
 use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -18,8 +17,7 @@ class SettingResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    private User $admin;
-    private AcademicYear $academicYear;
+    private User $admin;    
 
     protected function setUp(): void
     {
@@ -39,19 +37,12 @@ class SettingResourceTest extends TestCase
         $this->admin->assignRole('super-admin');
         $this->admin->givePermissionTo([$perm]);
 
-        $this->academicYear = AcademicYear::factory()->create([
-            'name'       => '2025-2026',
-            'start_date' => '2025-09-01',
-            'end_date'   => '2026-06-30',
-            'is_current' => true,
-            'is_locked'  => false,
-        ]);
+
     }
 
      public function test_can_edit_setting()
     {
         $setting = Setting::create([
-            'academic_year_id' => $this->academicYear->id,
             'key' => 'existing_key',
             'value' => 'old_value',
         ]);

@@ -10,6 +10,7 @@ use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\TextInputColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
 use Filament\Actions\EditAction;
 use Filament\Actions\DeleteBulkAction;
@@ -51,21 +52,16 @@ class SettingResource extends Resource
     {
         return $schema
             ->schema([
-                \Filament\Forms\Components\Select::make('academic_year_id')
-                    ->label(__('Academic Year'))
-                    ->relationship('academicYear', 'name')
-                    ->required()
-                    ->default(fn () => \App\Models\AcademicYear::where('is_current', true)->value('id'))
-                    ->disabled(),
+
                 TextInput::make('key')->label(__('Key'))
                     ->required()
                     ->disabled()
                     ->formatStateUsing(fn (?string $state): ?string => $state ? __($state) : null)
-                    ->unique(ignoreRecord: true, modifyRuleUsing: fn (\Illuminate\Validation\Rules\Unique $rule, \Filament\Schemas\Components\Utilities\Get $get) => $rule->where('academic_year_id', $get('academic_year_id')))
+                    ->unique(ignoreRecord: true)
                     ->maxLength(255),
                 TextInput::make('value')
                     ->label(__('Value'))
-                    ->hidden(fn (\Filament\Schemas\Components\Utilities\Get $get) => $get('type') === 'boolean')
+                    ->hidden(fn (\Filament\Schemas\Components\Utilities\Get $get) => $get('type') === 'boolean' || $get('type') === 'image')
                     ->disabled(fn (?Setting $record) => $record ? ! $record->editable : false),
                 \Filament\Forms\Components\Select::make('value')
                     ->label(__('Value'))
@@ -74,6 +70,26 @@ class SettingResource extends Resource
                         '0' => 'FALSE',
                     ])
                     ->hidden(fn (\Filament\Schemas\Components\Utilities\Get $get) => $get('type') !== 'boolean')
+                    ->disabled(fn (?Setting $record) => $record ? ! $record->editable : false),
+                \Filament\Forms\Components\FileUpload::make('value')
+                    ->label(__('Value'))
+                    ->disk('public')
+                    ->image()
+                    ->imagePreviewHeight('120')
+                    ->acceptedFileTypes([
+                        'image/png',
+                        'image/jpeg',
+                        'image/gif',
+                        'image/svg+xml',
+                        'image/webp',
+                        'image/x-icon',
+                        'image/vnd.microsoft.icon',
+                    ])
+                    ->directory('settings')
+                    ->validationMessages([
+                        'mimetypes' => __('The file must be an image (PNG, JPG, GIF, SVG, WebP, ICO).'),
+                    ])
+                    ->hidden(fn (\Filament\Schemas\Components\Utilities\Get $get) => $get('type') !== 'image')
                     ->disabled(fn (?Setting $record) => $record ? ! $record->editable : false),
                 // \Filament\Forms\Components\Toggle::make('editable')
                 //     ->label(__('Editable'))
@@ -84,6 +100,7 @@ class SettingResource extends Resource
                         'text' => __('Text'),
                         'number' => __('Number'),
                         'boolean' => __('Boolean'),
+                        'image' => __('Image'),
                     ])
                     ->default('text')
                     ->live()
@@ -96,48 +113,69 @@ class SettingResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('academicYear.name')->label(__('Academic Year'))
-                    ->sortable()
-                    ->searchable(),
                 TextColumn::make('key')->label(__('Key'))
                     ->formatStateUsing(fn (?string $state): ?string => $state ? __($state) : null)
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 \Filament\Tables\Columns\IconColumn::make('editable')->label(__('Editable'))
-                    ->boolean(),
+                    ->boolean()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('type')->label(__('Type'))
                     ->formatStateUsing(fn (?string $state): ?string => $state ? __(ucfirst($state)) : null)
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextInputColumn::make('value')->label(__('Value'))
-                    ->state(function ($record) {
-                        if ($record->type === 'boolean') {
-                            return $record->value == '1' ? 'TRUE' : 'FALSE';
+                        ->state(function ($record) {
+                            if ($record->type === 'boolean') {
+                                return $record->value == '1' ? 'TRUE' : 'FALSE';
+                            }
+                            if ($record->type === 'image') {
+                                return null; // image rows show the ImageColumn instead
+                            }
+                            return $record->value;
+                        })
+                        ->disabled(fn ($record) => ! $record->editable || $record->type === 'boolean' || $record->type === 'image')
+                        ->updateStateUsing(function ($record, $state) {
+                            if ($record->type === 'image') {
+                                return; // prevent accidental text update on image rows
+                            }
+                            $record->update(['value' => $state]);
+                            \Filament\Notifications\Notification::make()
+                                ->title(__('Saved successfully'))
+                                ->success()
+                                ->send();
+                        })
+                        ->searchable()
+                        ->toggleable(isToggledHiddenByDefault: false),
+                ImageColumn::make('value_image')
+                    ->label(__('Value'))
+                    ->height(48)
+                    ->getStateUsing(function ($record) {
+                        if ($record->type !== 'image' || ! $record->value) {
+                            return null;
                         }
-                        return $record->value;
+                        // Generate a URL relative to the current request host,
+                        // avoiding APP_URL / localhost mis-configuration on VPS.
+                        return url(\Illuminate\Support\Facades\Storage::disk('public')->url($record->value));
                     })
-                    ->disabled(fn ($record) => ! $record->editable || $record->type === 'boolean')
-                    ->updateStateUsing(function ($record, $state) {
-                        $record->update(['value' => $state]);
-                        \Filament\Notifications\Notification::make()
-                            ->title(__('Saved successfully'))
-                            ->success()
-                            ->send();
-                    })
-                    ->searchable(),
+                    ->visible(fn ($record) => true) // always rendered; null state = blank cell
+                    ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('created_at')->label(__('Created at'))
-                    ->dateTime()
+                    ->since()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')->label(__('Updated at'))
-                    ->dateTime()
+                    ->since()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                \Filament\Tables\Filters\SelectFilter::make('academic_year_id')
-                    ->label(__('Academic Year'))
-                    ->relationship('academicYear', 'name')
-                    ->default(fn () => \App\Models\AcademicYear::where('is_current', true)->value('id')),
+
             ])
+            ->defaultPaginationPageOption(30)
+            ->defaultSort('updated_at', 'desc')
             ->actions([
                 EditAction::make(),
             ])

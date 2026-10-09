@@ -19,7 +19,6 @@ class ActivityLogsTable
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'authentication' => 'info',
-                        'academic-years' => 'info',
                         'users'          => 'danger',
                         'roles'          => 'gray',
                         'permissions'    => 'gray',
@@ -78,7 +77,6 @@ class ActivityLogsTable
                     ->label(__('Log name'))
                     ->options([
                         'authentication' => __('Authentication'),
-                        'academic-years' => __('Academic Years'),
                         'users'          => __('Users'),
                         'roles'          => __('Roles'),
                         'permissions'    => __('Permissions'),
