@@ -4,6 +4,8 @@ namespace App\Filament\Resources\ActivityLogs;
 
 use App\Filament\Resources\BaseResource;
 use App\Filament\Resources\ActivityLogs\Pages\ListActivityLogs;
+use App\Filament\Resources\ActivityLogs\Pages\ViewActivityLog;
+use App\Filament\Resources\ActivityLogs\Schemas\ActivityLogForm;
 use App\Filament\Resources\ActivityLogs\Tables\ActivityLogsTable;
 use BackedEnum;
 use Filament\Support\Icons\Heroicon;
@@ -78,13 +80,14 @@ public static function getNavigationBadge(): ?string
 
     public static function form(Schema $schema): Schema
     {
-        return $schema;
+        return ActivityLogForm::configure($schema);
     }
 
     public static function getPages(): array
     {
         return [
             'index' => ListActivityLogs::route('/'),
+            'view'  => ViewActivityLog::route('/{record}'),
         ];
     }
 }
