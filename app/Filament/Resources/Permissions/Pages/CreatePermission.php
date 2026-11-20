@@ -2,10 +2,10 @@
 
 namespace App\Filament\Resources\Permissions\Pages;
 
+use App\Filament\Pages\BaseCreateRecord;
 use App\Filament\Resources\Permissions\PermissionResource;
-use Filament\Resources\Pages\CreateRecord;
 
-class CreatePermission extends CreateRecord
+class CreatePermission extends BaseCreateRecord
 {
     protected static string $resource = PermissionResource::class;
 

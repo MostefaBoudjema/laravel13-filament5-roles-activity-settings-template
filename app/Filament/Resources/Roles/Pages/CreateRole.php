@@ -2,10 +2,10 @@
 
 namespace App\Filament\Resources\Roles\Pages;
 
+use App\Filament\Pages\BaseCreateRecord;
 use App\Filament\Resources\Roles\RoleResource;
-use Filament\Resources\Pages\CreateRecord;
 
-class CreateRole extends CreateRecord
+class CreateRole extends BaseCreateRecord
 {
     protected static string $resource = RoleResource::class;
 

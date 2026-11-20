@@ -2,11 +2,11 @@
 
 namespace App\Filament\Resources\Settings\Pages;
 
+use App\Filament\Pages\BaseEditRecord;
 use App\Filament\Resources\Settings\SettingResource;
 use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
 
-class EditSetting extends EditRecord
+class EditSetting extends BaseEditRecord
 {
     protected static string $resource = SettingResource::class;
 
@@ -17,8 +17,4 @@ class EditSetting extends EditRecord
         ];
     }
 
-    protected function getRedirectUrl(): string
-    {
-        return \App\Filament\Resources\Settings\SettingResource::getUrl('index');
-    }
 }

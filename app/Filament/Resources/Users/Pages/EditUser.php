@@ -2,10 +2,10 @@
 
 namespace App\Filament\Resources\Users\Pages;
 
+use App\Filament\Pages\BaseEditRecord;
 use App\Filament\Resources\Users\UserResource;
-use Filament\Resources\Pages\EditRecord;
 
-class EditUser extends EditRecord
+class EditUser extends BaseEditRecord
 {
     protected static string $resource = UserResource::class;
 }
