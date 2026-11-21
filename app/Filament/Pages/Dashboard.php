@@ -7,7 +7,7 @@ use Filament\Pages\Page;
 
 class Dashboard extends Page
 {
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-chart-bar';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-s-chart-bar';
 
     protected string $view = 'filament.pages.dashboard';
 

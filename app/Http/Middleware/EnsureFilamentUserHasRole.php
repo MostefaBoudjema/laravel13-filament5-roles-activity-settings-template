@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class EnsureFilamentUserHasRole
 {
     /**
-     * Restrict Filament panel access to authorized school admin users.
+     * Restrict Filament panel access to authorized admin users.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next

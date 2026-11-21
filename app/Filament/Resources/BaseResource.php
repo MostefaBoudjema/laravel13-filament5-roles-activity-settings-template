@@ -11,6 +11,6 @@ abstract class BaseResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('School Management');
+        return __('Module Management');
     }
 }

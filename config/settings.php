@@ -4,17 +4,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | School Configuration
+    | Module Configuration
     |--------------------------------------------------------------------------
     |
-    | Here you may configure the various settings used by the school system.
+    | Here you may configure the various settings used by the module system.
     | These values serve as defaults and can be overridden from the settings
     | table at runtime (see AppServiceProvider).
     |
     */
 
-    'manager' => env('SCHOOL_MANAGER', 'Le Directeur'), 
-    'manager_ar' => env('SCHOOL_MANAGER_AR', 'المسير'),
+    'manager' => env('MODULE_MANAGER', 'Le Directeur'), 
+    'manager_ar' => env('MODULE_MANAGER_AR', 'المسير'),
 
     'info' => [
         'direction' => "DIRECTION DE L'EDUCATION WILAYA _ANNABA_ALGERIA",

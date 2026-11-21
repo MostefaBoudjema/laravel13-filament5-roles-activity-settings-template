@@ -40,7 +40,6 @@ class SettingsSeeder extends Seeder
             'info.nif' => "",
             'info.article' => "",
             'info.compte' => "",
-            'ministry_header.school' => "",
             'name' => "",
             'name_ar' => "",
             'manager_title' => "",
