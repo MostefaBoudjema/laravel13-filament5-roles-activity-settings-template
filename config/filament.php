@@ -31,6 +31,7 @@ return [
 
     ],
 
+    'color' => env('FILAMENT_COLOR', 'Amber'),
     /*
     |--------------------------------------------------------------------------
     | Default Filesystem Disk

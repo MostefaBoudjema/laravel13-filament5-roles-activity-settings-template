@@ -45,12 +45,12 @@ class FilamentServiceProvider extends PanelProvider
             ->id('admin')
             ->path('/admin')
             ->colors([
-                'primary' => Color::Amber,                
+                'primary' => Color::{env('FILAMENT_COLOR', 'Amber')},
                 'secondary' => Color::Indigo,
             ])
             ->login()
-                        ->brandLogo($logo ? url(Storage::disk('public')->url($logo)) : asset('logo.png'))
-            ->favicon($favicon ? url(Storage::disk('public')->url($favicon)) : asset('favicon.ico'))
+            ->brandLogo($logo ? url('/storage/' . $logo) : asset('logo.png'))
+            ->favicon($favicon ? url('/storage/' . $favicon) : asset('favicon.ico'))
            
             ->brandLogoHeight(fn () => request()->routeIs('filament.admin.auth.login') ? '4rem' : '2rem') 
             ->maxContentWidth(Width::Full)
