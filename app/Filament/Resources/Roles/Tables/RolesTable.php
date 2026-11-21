@@ -14,21 +14,25 @@ class RolesTable
                 TextColumn::make('name')
                     ->label(__('Role'))
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('permissions.name')
                     ->label(__('Permissions'))
                     ->badge()
                     ->separator(',')
-                    ->wrap(),
+                    ->wrap()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('created_at')
                     ->label(__('Created at'))
                     ->date()
                     ->badge()
-                    ->color('primary'),
+                    ->color('primary')
+                    ->toggleable(isToggledHiddenByDefault: false),
             ])
             ->defaultSort('name')
-            ->filters([
-                // Add role-scoped filters here if needed.
-            ]);
+            // ->filters([
+            //     // Add role-scoped filters here if needed.
+            // ])
+             ;
     }
 }
