@@ -88,10 +88,10 @@
     "Update": "Modifier",
     "Delete": "Supprimer",
     "Module": "Module",
-    "Toggle column": "Afficher/Masquer la colonne",
+    "Toggle column": "Afficher\/Masquer la colonne",
     "All": "Tout",
-    "Toggle all": "Tout sélectionner/désélectionner",
-    "Toggle row": "Sélectionner/Désélectionner la ligne",
+    "Toggle all": "Tout sélectionner\/désélectionner",
+    "Toggle row": "Sélectionner\/Désélectionner la ligne",
     "filament-panels::widgets\/account-widget.welcome": "Bienvenue",
     "filament-panels::widgets\/account-widget.actions.logout.label": "Déconnexion",
     "filament-panels::widgets\/filament-info-widget.actions.open_documentation.label": "Documentation",
@@ -111,11 +111,11 @@
     "Go to page :page": "Aller à la page :page",
     "All rights reserved.": "Tous droits réservés.",
     "Pagination Navigation": "Navigation de pagination",
-
     "There is no permission named `:permission` for guard `:guard`.": "Il n'existe pas de permission nommée `:permission` pour le guard `:guard`.",
     "There is no [permission] with ID `:id` for guard `:guard`.": "Il n'existe pas de [permission] avec l'ID `:id` pour le guard `:guard`.",
     "There is no role named `:role` for guard `:guard`.": "Il n'existe pas de rôle nommé `:role` pour le guard `:guard`.",
     "There is no [role] with ID `:id` for guard `:guard`.": "Il n'existe pas de [rôle] avec l'ID `:id` pour le guard `:guard`.",
     "User does not have the right roles.": "L'utilisateur n'a pas les bons rôles.",
-    "User does not have the right permissions.": "L'utilisateur n'a pas les bonnes permissions."
+    "User does not have the right permissions.": "L'utilisateur n'a pas les bonnes permissions.",
+    "Pages & Features": ""
 }

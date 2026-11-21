@@ -13,36 +13,7 @@ class SettingsSeeder extends Seeder
      */
     public function run(): void
     {
-        Setting::updateOrCreate(
-            ['key' => 'INTENDANTE'],
-            ['value' => 'A.BOUSSEBAI', 'type' => 'text', 'editable' => true]
-        );
-        Setting::updateOrCreate(
-            ['key' => 'DIRECTEUR'],
-            ['value' => 'A.AZIZI', 'type' => 'text', 'editable' => true]
-        );
-        Setting::updateOrCreate(
-            ['key' => 'FONDATEUR'],
-            ['value' => 'K.LAMRI', 'type' => 'text', 'editable' => true]
-        );
         $settingsToSeed = [
-            'ministry_header.country_fr' => "",
-            'ministry_header.ministry_fr' => "",
-            'info.direction' => "",
-            'info.name' => "",
-            'info.type' => "",
-            'info.address' => "",
-            'info.city' => "",
-            'info.tel' => "",
-            'info.tel2' => "",
-            'info.email' => "",
-            'info.nrc' => "",
-            'info.nif' => "",
-            'info.article' => "",
-            'info.compte' => "",
-            'name' => "",
-            'name_ar' => "",
-            'manager_title' => "",
             'logo' => "",
             'favicon' => 'public/favicon.ico',
         ];

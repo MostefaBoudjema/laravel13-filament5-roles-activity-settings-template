@@ -1,6 +1,7 @@
 @php
     $modules       = $getModules();
     $actions       = $getActions();
+    $pagePerms     = $getPagePermissions();
     $selectedPerms = $getSelectedPermissions();
     $statePath     = $getStatePath();
     $isDisabled    = $isDisabled();
@@ -13,7 +14,8 @@
         'delete'   => __('Delete'),
     ];
 
-    $allPermNames = collect($modules)->flatMap(fn($a) => array_values($a))->values()->toArray();
+    $modulePermNames = collect($modules)->flatMap(fn($a) => array_values($a))->values()->toArray();
+    $allPermNames = array_merge($modulePermNames, $pagePerms);
 @endphp
 
 <x-dynamic-component :component="$getFieldWrapperView()" :field="$field">
@@ -241,6 +243,42 @@
 
             </table>
         </div>
+
+        {{-- ══════════ PAGE / FEATURE PERMISSIONS ══════════ --}}
+        @if (count($pagePerms) > 0)
+            <div class="pm-wrap" style="margin-top: 1rem;">
+                <table class="pm-table">
+                    <thead class="pm-thead">
+                        <tr>
+                            <th class="pm-th pm-th-module" colspan="2">{{ __('Pages & Features') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($pagePerms as $perm)
+                            <tr class="pm-row">
+                                <td class="pm-td pm-td-module">
+                                    <div class="pm-module-name">
+                                        <input
+                                            type="checkbox"
+                                            class="pm-cb"
+                                            :checked="has(@js($perm))"
+                                            @change="toggle(@js($perm))"
+                                            title="{{ $perm }}"
+                                            {{ $isDisabled ? 'disabled' : '' }}
+                                        />
+                                        <span>{{ __(ucwords(str_replace('_', ' ', $perm))) }}</span>
+                                    </div>
+                                </td>
+                                <td class="pm-td" style="text-align:right;">
+                                    <span style="font-size:.7rem;opacity:.5;text-transform:uppercase;">{{ $perm }}</span>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endif
+
     </div>
 
 </x-dynamic-component>
