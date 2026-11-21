@@ -39,13 +39,6 @@ class AppServiceProvider extends ServiceProvider
         $router->aliasMiddleware('role', RoleMiddleware::class);
         $router->aliasMiddleware('permission', PermissionMiddleware::class);
         $router->aliasMiddleware('role_or_permission', RoleOrPermissionMiddleware::class);
-        
-        // ── Authentication activity logging ─────────────────────────────────
-        $listener = app(LogAuthenticationActivity::class);
-        Event::listen(Login::class,  [$listener, 'handleLogin']);
-        Event::listen(Logout::class, [$listener, 'handleLogout']);
-        Event::listen(Failed::class, [$listener, 'handleFailed']);
-        // ───────────────────────────────────────────────────────────────────
 
         // Super-admin bypasses all permission checks
         // Gate::before(function (User $user, string $ability) {
@@ -79,11 +72,8 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Lang::handleMissingKeysUsing(function (string $key, array $replacements, string $locale) {
-            // Log it to storage/logs/laravel.log
-            Log::warning("Missing translation key: '{$key}' for locale: '{$locale}'");
-            
-            // Alternatively, return a specific marker so it stands out in the UI
-            return "⚠️ {$key}";
+            // Silently return the key as-is (Laravel default behavior) — no log spam
+            return null;
         });
 
     }

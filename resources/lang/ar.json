@@ -110,5 +110,12 @@
     "results": "نتائج",
     "Go to page :page": "الانتقال إلى الصفحة :page",
     "All rights reserved.": "جميع الحقوق محفوظة.",
-    "Pagination Navigation": "تصفح الصفحات"
+    "Pagination Navigation": "تصفح الصفحات",
+
+    "There is no permission named `:permission` for guard `:guard`.": "لا توجد صلاحية باسم `:permission` للحارس `:guard`.",
+    "There is no [permission] with ID `:id` for guard `:guard`.": "لا توجد [صلاحية] بالمعرّف `:id` للحارس `:guard`.",
+    "There is no role named `:role` for guard `:guard`.": "لا يوجد دور باسم `:role` للحارس `:guard`.",
+    "There is no [role] with ID `:id` for guard `:guard`.": "لا يوجد [دور] بالمعرّف `:id` للحارس `:guard`.",
+    "User does not have the right roles.": "المستخدم لا يمتلك الأدوار الصحيحة.",
+    "User does not have the right permissions.": "المستخدم لا يمتلك الصلاحيات الصحيحة."
 }

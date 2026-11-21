@@ -110,5 +110,11 @@
     "results": "results",
     "Go to page :page": "Go to page :page",
     "All rights reserved.": "All rights reserved.",
-    "Pagination Navigation": "Pagination Navigation"
+    "Pagination Navigation": "Pagination Navigation",
+    "There is no permission named `:permission` for guard `:guard`.": "There is no permission named `:permission` for guard `:guard`.",
+    "There is no [permission] with ID `:id` for guard `:guard`.": "There is no [permission] with ID `:id` for guard `:guard`.",
+    "There is no role named `:role` for guard `:guard`.": "There is no role named `:role` for guard `:guard`.",
+    "There is no [role] with ID `:id` for guard `:guard`.": "There is no [role] with ID `:id` for guard `:guard`.",
+    "User does not have the right roles.": "User does not have the right roles.",
+    "User does not have the right permissions.": "User does not have the right permissions."
 }
