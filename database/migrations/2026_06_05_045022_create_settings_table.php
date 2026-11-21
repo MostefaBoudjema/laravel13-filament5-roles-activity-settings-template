@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('key', 100);
             $table->text('value')->nullable();
             $table->boolean('editable')->default(true);
-            $table->enum('type', ['text', 'number', 'boolean'])->default('text');
+            $table->enum('type', ['text', 'number', 'boolean', 'image'])->default('text');
             $table->timestamps();
         });
     }

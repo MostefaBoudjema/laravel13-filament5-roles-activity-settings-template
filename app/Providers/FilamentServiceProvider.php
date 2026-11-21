@@ -29,17 +29,15 @@ class FilamentServiceProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
-
-            if (
-                \Illuminate\Support\Facades\Schema::hasTable('settings') 
-            ) {
-
-                    $logo = \App\Models\Setting::where('key', 'logo')
-                        ->value('value');
-                    $favicon = \App\Models\Setting::where('key', 'favicon')
-                        ->value('value');
-             
+        $logo = null;
+        $favicon = null;
+        try {
+            if (\Illuminate\Support\Facades\Schema::hasTable('settings')) {
+                $logo = \App\Models\Setting::where('key', 'logo')->value('value');
+                $favicon = \App\Models\Setting::where('key', 'favicon')->value('value');
             }
+        } catch (\Throwable $e) {
+        }
         return $panel
             ->default()
             ->id('admin')
