@@ -16,7 +16,7 @@ class RolesAndPermissionsSeeder extends Seeder
 
         // Create permissions for each model
         $models = [ 'user', 'role', 'permission', 'activity_log',  'setting'];
-        $actions = ['view_any', 'view', 'create', 'update', 'delete'];
+        $actions = ['view_any', 'view', 'create', 'update', 'delete', 'download_pdf', 'export_excel'];
 
         $allPermissions = [];
         foreach ($models as $model) {

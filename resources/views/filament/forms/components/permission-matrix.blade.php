@@ -7,11 +7,13 @@
     $isDisabled    = $isDisabled();
 
     $actionLabels = [
-        'view_any' => __('View Any'),
-        'view'     => __('View'),
-        'create'   => __('Create'),
-        'update'   => __('Update'),
-        'delete'   => __('Delete'),
+        'view_any'     => __('View Any'),
+        'view'         => __('View'),
+        'create'       => __('Create'),
+        'update'       => __('Update'),
+        'delete'       => __('Delete'),
+        'download_pdf' => __('PDF'),
+        'export_excel' => __('Excel'),
     ];
 
     $modulePermNames = collect($modules)->flatMap(fn($a) => array_values($a))->values()->toArray();

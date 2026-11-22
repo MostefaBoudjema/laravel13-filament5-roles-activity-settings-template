@@ -13,10 +13,10 @@ return new class extends Migration
             $table->string('log_name', 50)->nullable();
             $table->text('description');
             $table->nullableMorphs('subject', 'subject');
-            $table->string('event', 50)->nullable()->after('subject_type');
+            $table->string('event', 50)->nullable();
             $table->nullableMorphs('causer', 'causer');
             $table->json('properties')->nullable();
-            $table->uuid('batch_uuid')->nullable()->after('properties');
+            $table->uuid('batch_uuid')->nullable();
             $table->timestamps();
             $table->index('log_name');
         });

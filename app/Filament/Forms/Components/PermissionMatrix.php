@@ -12,7 +12,7 @@ class PermissionMatrix extends Field
     /**
      * The ordered list of actions (X-axis columns).
      */
-    protected array $actions = ['view_any', 'view', 'create', 'update', 'delete'];
+    protected array $actions = ['view_any', 'view', 'create', 'update', 'delete', 'download_pdf', 'export_excel'];
 
     /**
      * Returns all permissions grouped by module.

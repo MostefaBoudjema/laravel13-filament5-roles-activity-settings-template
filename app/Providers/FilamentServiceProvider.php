@@ -58,10 +58,8 @@ class FilamentServiceProvider extends PanelProvider
             ->sidebarCollapsibleOnDesktop()
             ->sidebarWidth('16rem')
             ->navigationGroups([
-                NavigationGroup::make()->label(fn () => __('Financial')),
-                NavigationGroup::make()->label(fn () => __('CRM')),
-                NavigationGroup::make()->label(fn () => __('Settings')),
                 NavigationGroup::make()->label(fn () => __('Security')),
+                NavigationGroup::make()->label(fn () => __('Settings')),
             ])
             
             // ->navigation(function (NavigationBuilder $builder): NavigationBuilder {
