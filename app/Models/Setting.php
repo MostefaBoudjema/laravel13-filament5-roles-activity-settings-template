@@ -11,5 +11,8 @@ class Setting extends Model
     protected $casts = [
         'editable' => 'boolean',
     ];
-
+protected static function booted(): void
+{
+    static::saved(fn (Setting $setting) => cache()->forget("setting.{$setting->key}"));
+}
 }
