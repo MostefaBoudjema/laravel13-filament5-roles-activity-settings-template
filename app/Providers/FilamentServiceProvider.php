@@ -42,12 +42,27 @@ class FilamentServiceProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('/admin')
+
             ->colors([
-                'primary' => Color::{env('FILAMENT_COLOR', 'Amber')},
+                'primary' => Color::{config('filament.color')},
                 'secondary' => Color::Indigo,
+                'gray' => [
+                    50 => '248, 250, 252',   // Light theme main background
+                    100 => '241, 245, 249',  // Light theme secondary background/cards
+                    200 => '226, 232, 240',
+                    300 => '203, 213, 225',
+                    400 => '148, 163, 184',
+                    500 => '100, 116, 139',
+                    600 => '71, 85, 105',
+                    700 => '51, 65, 85',
+                    800 => '30, 41, 59',
+                    900 => '15, 23, 42',     // Dark theme secondary background/cards
+                    950 => '2, 6, 23',       // Dark theme main background
+                ],
             ])
             ->login()
             ->brandLogo($logo ? url('/storage/' . $logo) : asset('logo.png'))
+            ->darkModeBrandLogo($logo ? url('/storage/' . $logo) : asset('logo.png'))
             ->favicon($favicon ? url('/storage/' . $favicon) : asset('favicon.ico'))
            
             ->brandLogoHeight(fn () => request()->routeIs('filament.admin.auth.login') ? '4rem' : '2rem') 
