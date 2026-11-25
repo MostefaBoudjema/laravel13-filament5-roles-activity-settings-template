@@ -21,7 +21,7 @@ class SettingsSeeder extends Seeder
         foreach ($settingsToSeed as $key => $value) {
             Setting::updateOrCreate(
                 ['key' => $key],
-                ['value' => $value, 'type' => 'text', 'editable' => false]
+                ['value' => $value, 'type' => 'text', 'editable' => true]
             );
         }
 

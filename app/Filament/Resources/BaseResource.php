@@ -9,8 +9,9 @@ abstract class BaseResource extends Resource
 {
     protected static string | UnitEnum | null $navigationGroup = null;
 
-    public static function getNavigationGroup(): ?string
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::User;
+    public static function getNavigationBadge(): ?string
     {
-        return __('Module Management');
+        return static::getModel()::count();
     }
 }
